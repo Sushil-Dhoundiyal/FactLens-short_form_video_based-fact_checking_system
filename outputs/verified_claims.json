@@ -1,0 +1,50 @@
+[
+  {
+    "claim": "If Jupiter was not in Brahmins, the Earth would have been finished by now.",
+    "verdict": "Partially True",
+    "source": [
+      "https://spaceaustralia.com/feature/jupiters-complicated-relationship-life-earth",
+      "https://www.icr.org/article/jupiter-might-guardian-of-earth"
+    ],
+    "explanation": "The statement is partially true because Jupiter plays a crucial role in protecting Earth from impacts by deflecting comets and asteroids. However, the reference to 'Brahmins' is unclear and seems unrelated to the scientific context. Jupiter's absence would indeed make Earth more vulnerable to impacts, potentially rendering it uninhabitable[3][4]."
+  },
+  {
+    "claim": "There are around 1300 Earthly planets in Jupiter.",
+    "verdict": "False",
+    "source": [
+      "https://science.nasa.gov/jupiter/jupiter-facts/"
+    ],
+    "explanation": "This claim is false. Jupiter is a gas giant and does not contain planets. It is known for its massive size, capable of holding about 1,000 Earths if it were a hollow shell[1]."
+  },
+  {
+    "claim": "Jupiter is made of gas.",
+    "verdict": "True",
+    "source": [
+      "https://science.nasa.gov/jupiter/jupiter-facts/"
+    ],
+    "explanation": "Jupiter is indeed primarily composed of hydrogen and helium gases, making it a gas giant planet[1]."
+  },
+  {
+    "claim": "Jupiter is called the Big Brother of the Earth.",
+    "verdict": "Unverified",
+    "source": [],
+    "explanation": "There is no widely recognized scientific or colloquial term referring to Jupiter as the 'Big Brother of the Earth'. This term might be used metaphorically or in specific contexts but lacks a credible source to support it as a common designation."
+  },
+  {
+    "claim": "Jupiter grew by attracting matter around it, increasing its force of attraction.",
+    "verdict": "Partially True",
+    "source": [
+      "https://science.nasa.gov/jupiter/jupiter-facts/"
+    ],
+    "explanation": "Jupiter's growth is attributed to its gravitational attraction of surrounding material during its formation. However, the specific mechanism of its growth and the increase in its gravitational force over time is more complex and involves processes like core accretion and gas capture[1]."
+  },
+  {
+    "claim": "Jupiter's gravitational force draws asteroids away from Earth.",
+    "verdict": "True",
+    "source": [
+      "https://www.icr.org/article/jupiter-might-guardian-of-earth",
+      "https://spaceaustralia.com/feature/jupiters-complicated-relationship-life-earth"
+    ],
+    "explanation": "Jupiter's massive size and gravitational pull do help deflect asteroids and comets, protecting Earth from potential impacts. This role is crucial in maintaining Earth's habitability[3][4]."
+  }
+]

@@ -1,0 +1,21 @@
+# audio/video
+moviepy
+pydub
+imageio-ffmpeg
+
+# speech to text
+nltk
+openai-whisper
+ 
+# nlp and ml
+transformers (BERT)
+torch
+sentence-transformers
+
+# fact verification api working
+wikipedia
+requests
+
+#  for web backend
+Flask
+Werkzeug

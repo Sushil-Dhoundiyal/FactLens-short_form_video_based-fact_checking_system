@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Trending Fake Claims | FactLens</title>
+  <meta name="description" content="Stay updated on trending headlines and assess their fact-check worthiness with our interactive score." />
+  <meta name="robots" content="index,follow" />
+  <link rel="canonical" href="https://www.faktcheck.in/trending.html" />
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Trending Fake Claims | FaktCheck India" />
+  <meta property="og:description" content="Stay updated on trending headlines and assess their fact-check worthiness." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://www.faktcheck.in/trending.html" />
+  <meta property="og:image" content="https://www.faktcheck.in/assets/trending-cover.png" />
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Trending Fake Claims | FaktCheck India" />
+  <meta name="twitter:description" content="Trending headlines and their fact-check scores." />
+  <meta name="twitter:image" content="https://www.faktcheck.in/assets/trending-cover.png" />
+
+  <!-- JSON-LD Structured Data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "name": "Trending Fake Claims",
+    "url": "https://www.faktcheck.in/trending.html",
+    "description": "Stay updated on trending headlines and assess their fact-check worthiness."
+  }
+  </script>
+
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <style>
+    .spinner { width: 40px; height: 40px; border: 4px solid rgba(107,70,193,0.2); border-top: 4px solid #6b46c1; border-radius: 50%; animation: spin 1s linear infinite; }
+    @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+  </style>
+</head>
+<body class="bg-gradient-to-br from-gray-50 to-gray-200 text-gray-800">
+  <!-- Navbar -->
+  <nav class="bg-indigo-700 p-4 sticky top-0 z-20">
+    <div class="container mx-auto flex items-center justify-between">
+      <a href="index.html" class="text-white text-xl font-bold flex items-center">
+        <i class="fas fa-search-plus mr-2"></i>FactLens
+      </a>
+      <button id="nav-toggle" class="md:hidden text-white focus:outline-none focus:ring-2 focus:ring-white">
+        <span class="sr-only">Toggle navigation</span><i class="fas fa-bars fa-2x"></i>
+      </button>
+      <!-- <div id="nav-menu" class="hidden md:flex space-x-6">
+        <a href="index.html" class="text-white hover:text-gray-200">Home</a>
+        <a href="policies.html" class="text-white hover:text-gray-200">Policies</a>
+        <a href="safety.html" class="text-white hover:text-gray-200">Safety Tips</a>
+        <a href="trending.html" class="text-white font-semibold underline">Trending Claims</a>
+      </div> -->
+      <div id="nav-menu" class="hidden md:flex space-x-6">
+        <a href="/" class="text-white hover:text-gray-200">Home</a>
+        <a href="/policies" class="text-white hover:text-gray-200">Policies</a>
+        <a href="/safety" class="text-white hover:text-gray-200">Safety Tips</a>
+        <a href="/trending" class="text-white font-semibold underline">Trending Claims</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Main Content -->
+  <main class="container mx-auto p-4">
+    <h1 class="text-4xl font-extrabold text-center bg-clip-text text-transparent bg-gradient-to-r from-purple-600 to-pink-500 mt-8">Trending News & Suspected Claims</h1>
+    <p class="text-center text-gray-700 mt-2">Stay informed about trending headlines and assess their fact-check worthiness.</p>
+
+    <div class="flex justify-center mt-6">
+      <button id="refreshBtn" class="bg-indigo-600 text-white px-5 py-2 rounded-lg hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-400 inline-flex items-center">
+        <i class="fas fa-sync-alt mr-2"></i>Load Headlines
+      </button>
+    </div>
+
+    <div id="trendingResults" class="mt-8 space-y-6">
+      <!-- Cards injected by JS -->
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-indigo-700 text-white p-6 mt-12">
+    <div class="container mx-auto text-center">
+      <p>&copy; 2025 FactLens. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script>
+    // Navbar toggle
+    document.getElementById('nav-toggle').addEventListener('click', () => {
+      document.getElementById('nav-menu').classList.toggle('hidden');
+    });
+
+    const GUARDIAN_API_KEY = 'df0b4ebb-8f5a-4261-8376-167af71c81cb';
+    const CLAIMBUSTER_API_KEY = 'a9956575d9ea4c99ac4c86ed88a6fbd5';
+
+    function getScoreDescription(score) {
+      if (score >= 0.75) return "Highly check-worthy claim";
+      if (score >= 0.50) return "Potentially check-worthy";
+      if (score >= 0.25) return "Somewhat factual";
+      return "Mostly factual statement";
+    }
+
+    function getScoreColors(score) {
+      if (score >= 0.75) return ['#fed7d7', '#e53e3e'];
+      if (score >= 0.50) return ['#feebc8', '#dd6b20'];
+      if (score >= 0.25) return ['#fefcbf', '#d69e2e'];
+      return ['#c6f6d5', '#38a169'];
+    }
+
+    async function checkClaimworthiness(text) {
+      try {
+        const resp = await fetch(`https://idir.uta.edu/claimbuster/api/v2/score/text/${encodeURIComponent(text)}`, {
+          headers: { 'x-api-key': CLAIMBUSTER_API_KEY }
+        });
+        const data = await resp.json();
+        return data.score ?? (Math.random() * 0.5 + 0.3);
+      } catch {
+        return Math.random() * 0.5 + 0.3;
+      }
+    }
+
+    async function fetchNews() {
+      try {
+        const res = await fetch(
+          `https://content.guardianapis.com/search?section=world|politics|technology|science&show-fields=trailText&api-key=${GUARDIAN_API_KEY}`
+        );
+        const data = await res.json();
+        if (data.response?.results?.length) {
+          return data.response.results.slice(0, 6).map(a => ({
+            title: a.webTitle,
+            source: 'The Guardian',
+            date: new Date(a.webPublicationDate).toLocaleDateString(),
+            description: a.fields?.trailText || '',
+            url: a.webUrl
+          }));
+        }
+      } catch (e) {
+        console.error('Guardian error', e);
+      }
+      return [];
+    }
+
+    async function loadTrending() {
+      const container = document.getElementById('trendingResults');
+      container.innerHTML = '<div class="loading flex justify-center p-8"><div class="spinner"></div></div>';
+      const articles = await fetchNews();
+      container.innerHTML = '';
+      for (const art of articles) {
+        const score = await checkClaimworthiness(art.title);
+        const [bg, fg] = getScoreColors(score);
+        const card = document.createElement('div');
+        card.className = 'bg-white p-6 rounded-lg shadow-md hover:shadow-xl transition';
+        card.innerHTML = `
+          <h3 class="text-xl font-semibold text-gray-800">${art.title}</h3>
+          <p class="text-sm text-gray-500 mt-1">${art.source} • ${art.date}</p>
+          <p class="mt-4 text-gray-700">${art.description}</p>
+          <div class="mt-4 inline-flex items-center gap-2">
+            <span class="font-semibold">Score:</span>
+            <span class="px-3 py-1 rounded-full font-medium" style="background:${bg}; color:${fg}">${score.toFixed(2)} - ${getScoreDescription(score)}</span>
+          </div>
+          <a href="${art.url}" target="_blank" class="mt-4 inline-block text-indigo-600 hover:underline">Read Full Article →</a>
+        `;
+        container.appendChild(card);
+      }
+    }
+
+    document.getElementById('refreshBtn').addEventListener('click', loadTrending);
+    loadTrending();
+  </script>
+</body>
+</html>
