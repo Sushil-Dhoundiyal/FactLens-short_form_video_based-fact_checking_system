@@ -57,18 +57,16 @@
    Click "Fact Check"
    View claim verification results
 
-🧾 Sample Output (verified_claims.json)
-[
-{
-"claim": "The Taj Mahal was built in 1632.",
-"verdict": "True",
-"source": ["https://en.wikipedia.org/wiki/Taj_Mahal"],
-"explanation": "Multiple historical records confirm the construction of the Taj Mahal began in 1632."
-},
-{
-"claim": "Vaccines cause autism.",
-"verdict": "False",
-"source": ["https://www.cdc.gov/vaccinesafety/concerns/autism.html"],
-"explanation": "No credible scientific evidence supports the claim that vaccines cause autism."
-}
-]
+## Output Screenshots
+![Screenshot (39)](https://github.com/user-attachments/assets/546b0dd0-8e5b-43ad-9620-076272eaafdf)
+
+![Screenshot (40)](https://github.com/user-attachments/assets/f27864f8-4bba-444d-a772-85899da1642c)
+
+![Screenshot (42)](https://github.com/user-attachments/assets/f3ca4afd-e5d3-4993-b2b9-380cb6002247)
+![Screenshot (43)](https://github.com/user-attachments/assets/0ed6fbb1-71ee-48db-9587-932aaeaec9a5)
+
+![Screenshot (44)](https://github.com/user-attachments/assets/b58cecb5-d602-4103-8b3b-45271f796ccd)
+
+
+
+
